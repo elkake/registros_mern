@@ -1,40 +1,131 @@
 import { response, request } from 'express'
+import { pool } from '../helper/conectionBD.js'
 
-const obtenerClientes = (req = request, res = response) => {
-  res.json({
-    msg: 'get API - Clientes'
-  })
+/*
+  * GET data
+  ? Obtener todos los clientes
+*/
+const obtenerClientes = async (req = request, res = response) => {
+  try {
+    const [result] = await pool.query('SELECT * FROM persona')
+    res.json({
+      result
+    })
+  } catch (error) {
+    console.log(error)
+    res.json({
+      msg: 'Error en la consulta'
+    })
+  }
 }
 
-const obtenerCliente = (req = request, res = response) => {
-  res.json({
-    msg: 'get API - Cliente'
-  })
+/*
+  * GET one data
+  ? Obtener solo un cliente por id
+  TODO: Obtener el id como entero
+  TODO: Query para obtener solo un cliente
+*/
+
+const obtenerCliente = async (req = request, res = response) => {
+  const id = parseInt(req.params.id)
+  try {
+    const [result] = await pool.query('SELECT * FROM persona WHERE id_p=?', [
+      id
+    ])
+    res.json({
+      result
+    })
+  } catch (error) {
+    console.log(error)
+    res.json({
+      msg: 'Error en la consulta'
+    })
+  }
 }
 
-const crearCliente = (req = request, res = response) => {
-  res.json({
-    msg: 'post API - Cliente'
-  })
+/*
+  * POST data
+  ? Crear un nuevo cliente
+  TODO: obtener los datos del body (object destructuring)
+  TODO: query insert into
+*/
+
+const crearCliente = async (req = request, res = response) => {
+  const { nombre, apellido, edad, email, contrasena } = req.body
+  try {
+    await pool.query(
+      'INSERT INTO persona (name, lastName, age, email, password) values (?, ?, ?, ?, ?)',
+      [nombre, apellido, edad, email, contrasena]
+    )
+    res.json({
+      msg: 'Creado correctamente'
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
 }
 
-const actualizarCliente = (req = request, res = response) => {
-  res.json({
-    msg: 'put API - actualizar'
-  })
+/*
+  * PUT data
+  ? Editar cliente a traves del id
+  TODO: obtener el id como entero
+  TODO: obtener los datos del body (object destructuring)
+  TODO: convertir el 'edad' a entero, en caso no tener colocar 0
+  TODO: query update
+*/
+
+const actualizarCliente = async (req = request, res = response) => {
+  const id = parseInt(req.params.id)
+  const { nombre, apellido, edad, email, contrasena } = req.body
+  const edadEntero = edad ? parseInt(edad) : 0
+
+  try {
+    await pool.query(
+      'UPDATE persona SET name=?, lastName=?, age=?,email=? ,password=?  WHERE id_p=?',
+      [nombre, apellido, edadEntero, email, contrasena, id]
+    )
+    res.json({
+      msg: 'ACtualizado correctamente'
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
 }
 
-const eliminarCliente = (req = request, res = response) => {
-  res.json({
-    msg: 'delete API - elliminar'
-  })
+/*
+  * DELETE data
+  ? Eliminar cliente a traves del id
+  TODO: obtener el id como entero
+  TODO: query delete
+*/
+const eliminarCliente = async (req = request, res = response) => {
+  const id = parseInt(req.params.id)
+  try {
+    pool.query('DELETE FROM persona WHERE id_p=?', [id])
+
+    res.json({
+      msg: 'Eliminado correctamente'
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
 }
 
-const eliminarClientes = (req = request, res = response) => {
-  res.json({
-    msg: 'delete API - eliminar todo'
-  })
-}
+/*
+  * DELETE all data
+  ? Eliminar cliente todos los datos de la tabla
+  !no se recomienda usar
+  TODO: query delete
+*/
+
+const eliminarClientes = (req = request, res = response) => {}
+
 export const objC = {
   obtenerClientes,
   obtenerCliente,
