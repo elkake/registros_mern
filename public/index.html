@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QUERIES</title>
+  </head>
+  <body>
+    <h1>BASIC CRUD</h1>
+    <section>
+      <h2>GET(Listar clientes)</h2>
+      <form style="display: flex; flex-direction: column">
+        <span style="opacity: 0.5"
+          >*Si id es 0 o null, se listara toda la bd*</span
+        >
+        <input class="getId" type="number" min="0" placeholder="id" />
+        <input class="getSubmit" type="submit" value="get" />
+        <textarea
+          style="font-size: 8px"
+          class="getArea"
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          contenteditable="false"
+          placeholder="obtener info de base de datos"
+        ></textarea>
+        <button
+          class="deleteButton"
+          style="background-color: #f34; color: white"
+        >
+          ELIMINAR
+        </button>
+      </form>
+    </section>
+    <section style="max-width: 500px; margin: 1em auto">
+      <fieldset>
+        <legend>POST(Crear cliente)</legend>
+        <fieldset>
+          <legend>PUT ELEMENT</legend>
+
+          <input type="checkbox" value="chekbox" class="postCheckbox" />
+          <input type="number" class="postNumber" placeholder="id" min="1" />
+          <button class="putGet">Obtener</button>
+        </fieldset>
+        <form class="postForm" style="display: flex; flex-direction: column">
+          <span>Nombre: </span>
+          <input type="text" />
+          <span>Apellido: </span>
+          <input type="text" />
+          <span>Edad: </span>
+          <input type="number" />
+          <span>E-mail:</span>
+          <input type="email" />
+          <span>Contraseña:</span>
+          <input type="password" />
+          <span>Confirmar contraseña:</span>
+          <input type="password" />
+          <input class="postSubmit" type="submit" value="Registrar" />
+        </form>
+      </fieldset>
+    </section>
+  </body>
+  <script src="js/index.js" type="module"></script>
+</html>
