@@ -81,8 +81,8 @@ const postData = async (data) => {
 }
 
 /*
-  * PUT data
-*/
+ * PUT data
+ */
 const postCheckbox = document.querySelector('.postCheckbox')
 const postNumber = document.querySelector('.postNumber')
 const putGet = document.querySelector('.putGet')
@@ -129,7 +129,7 @@ const putData = async (data, id) => {
 }
 
 // * post and put method
-postSubmit.addEventListener('click', (e) => {
+postSubmit.addEventListener('click', async (e) => {
   e.preventDefault()
   const data = Array.apply(null, postForm).slice(0, 6)
   if (data[4].value !== data[5].value) alert('Las contraseñas no coinciden')
@@ -149,9 +149,15 @@ postSubmit.addEventListener('click', (e) => {
   }
 
   // * POST method
-  postData(data).then((response) => {
-    if (response.status === 200) {
-      console.log('creado correctamente')
+  try {
+    const response = await postData(data)
+    if (response.status === 303) {
+      return alert('El email ya existe')
     }
-  })
+    if (response.status === 200) {
+      return alert('Cliente creado correctamente')
+    }
+  } catch (error) {
+    console.log(error)
+  }
 })

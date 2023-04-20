@@ -1,6 +1,6 @@
 import { response, request } from 'express'
 import { pool } from '../helper/conectionBD.js'
-
+import bcrypt from 'bcryptjs'
 /*
   * GET data
   ? Obtener todos los clientes
@@ -52,12 +52,29 @@ const obtenerCliente = async (req = request, res = response) => {
 
 const crearCliente = async (req = request, res = response) => {
   const { nombre, apellido, edad, email, contrasena } = req.body
+
+  // encriptar contraseña
+  const salt = bcrypt.genSaltSync(10)
+  const hash = await bcrypt.hashSync(contrasena, salt)
+  const contrasenaCrypt = hash
+
   try {
-    await pool.query(
+    // validar que no se repita el email
+    const [result] = await pool.query('SELECT * FROM persona WHERE email=?', [
+      email
+    ])
+    if (result.length > 0) {
+      return res.sendStatus(303)
+    }
+
+    // insertar en la base de datos
+    const response = await pool.query(
       'INSERT INTO persona (name, lastName, age, email, password) values (?, ?, ?, ?, ?)',
-      [nombre, apellido, edad, email, contrasena]
+      [nombre, apellido, edad, email, contrasenaCrypt]
     )
+
     res.json({
+      response,
       msg: 'Creado correctamente'
     })
   } catch (error) {

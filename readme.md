@@ -1,6 +1,12 @@
-#BASE API 4 MYSQL
+#MERN + sequelize
+
+Proyecto que se basa en la visualización de registros de compras realizada por diferentes usuarios.
+
+- Tablas enlazadas a tráves de foreign keys.
+  para reforzar los conocimientos de Mysql y aprender a poner en práctica el ORM Sequelize.
 
 ###EJECUCION
+
 `npm start` -> `node --watch server.js`
 
 ###.env
@@ -13,52 +19,73 @@
 `MYSQLPORT=` puerto de base de datos
 
 ###Configuración general
+
 (modificacion en controller/cliente.js)
 
-- Nombre de tabla de DB : `persona`
-- Columnas de tabla:
-  `id_p | name  | lastName | age | email             | password `
-- key del objeto json entregado a traves del body para la creacion de clientes.
-  `nombre, apellido, edad, email, contrasena`
+- Creación de tablas : `./helper/sequelizeBD.js`
 
-(modificacion en models/serverClass.js > routes)
+- Estructura de tabla usuarios:
+  `id | nombre  | apellido | edad | correo | telefono | provincia | ciudad | direccion | password`
 
-- Nombre estatico para consultas http: `/clientes/`
+- Nombre estatico para consultas http: `/usuario/`
 
 ##CRUD
+
 Este es un ejemplo con localhost:3000/
+
 ####GET
-Obtener todos los elmentos de la tabla persona
-`https://localhost:3000/clientes`
-####GET for id
+
+Obtener columnas a tráves de query.
+
+`https://localhost:3000/usuario?nombre=nombre&apellido=apellido...`
+
+NOTA: si no hay query se devuelve toda la tabla.
+
+####GET Usuario ID
+
 Obtener un dato a traves del id pasado como param
-`https://localhost:3000/clientes/2`
+
+`https://localhost:3000/usuario/datos/2`
+
+####GET Usuario query
+
+Obtener una fila a traves de query
+
+`https://localhost:3000/usuario/datos?nombre=Pepe`
+
 ####POST
-Crear un nuevo cliente en la tabla persona
-`https://localhost:3000/clientes`
+
+Crear un nuevo cliente en la tabla usuarios
+
+`https://localhost:3000/usuario`
 
 - requisitos:
-        body: JSON.stringify({
-        nombre: value,
-        apellido: value,
-        edad: valueInt,
-        email: value,
-        contrasena: value
-        })
+  body: JSON.stringify({
+  "nombre": "Pepe",
+  "apellido": "Perez",
+  "correo": "test1@gmail.com",
+  "edad": 25,
+  "telefono": "0999999999",
+  "provincia": "Pichincha",
+  "ciudad": "Quito",
+  "direccion": "Av. 6 de Diciembre",
+  "password":"1111"
+  })
 
 ####PUT
+
 Actualizar un cliente a traves del :id
-`https://localhost:3000/clientes/1`
+
+`https://localhost:3000/usuario/1`
 
 - requisitos:
-        body: JSON.stringify({
-        nombre: value,
-        apellido: value,
-        edad: valueInt,
-        email: value,
-        contrasena: value
-        })
+  body: JSON.stringify
+  ({
+  nombre: value,
+  })
 
 ####DELETE
+
 Eliminar un cliente a traves del :id
-`https://localhost:3000/clientes/1`
+
+`https://localhost:3000/usuario/1`
