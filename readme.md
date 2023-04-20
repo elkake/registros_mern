@@ -1,15 +1,15 @@
-#MERN + sequelize
+# MERN + sequelize
 
 Proyecto que se basa en la visualización de registros de compras realizada por diferentes usuarios.
 
 - Tablas enlazadas a tráves de foreign keys.
   para reforzar los conocimientos de Mysql y aprender a poner en práctica el ORM Sequelize.
 
-###EJECUCION
+### EJECUCION
 
 `npm start` -> `node --watch server.js`
 
-###.env
+### .env
 
 `PORT=` puerto de escucha de API
 `MYSQLDATABASE=` base de datos
@@ -18,7 +18,7 @@ Proyecto que se basa en la visualización de registros de compras realizada por 
 `MYSQLPASSWORD=` contraseña
 `MYSQLPORT=` puerto de base de datos
 
-###Configuración general
+### Configuración general
 
 (modificacion en controller/cliente.js)
 
@@ -29,11 +29,11 @@ Proyecto que se basa en la visualización de registros de compras realizada por 
 
 - Nombre estatico para consultas http: `/usuario/`
 
-##CRUD
+## CRUD
 
 Este es un ejemplo con localhost:3000/
 
-####GET
+#### GET
 
 Obtener columnas a tráves de query.
 
@@ -41,19 +41,19 @@ Obtener columnas a tráves de query.
 
 NOTA: si no hay query se devuelve toda la tabla.
 
-####GET Usuario ID
+#### GET Usuario ID
 
 Obtener un dato a traves del id pasado como param
 
 `https://localhost:3000/usuario/datos/2`
 
-####GET Usuario query
+#### GET Usuario query
 
 Obtener una fila a traves de query
 
 `https://localhost:3000/usuario/datos?nombre=Pepe`
 
-####POST
+#### POST
 
 Crear un nuevo cliente en la tabla usuarios
 
@@ -72,7 +72,7 @@ Crear un nuevo cliente en la tabla usuarios
   "password":"1111"
   })
 
-####PUT
+#### PUT
 
 Actualizar un cliente a traves del :id
 
@@ -84,7 +84,7 @@ Actualizar un cliente a traves del :id
   nombre: value,
   })
 
-####DELETE
+#### DELETE
 
 Eliminar un cliente a traves del :id
 
