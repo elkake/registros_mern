@@ -77,21 +77,18 @@ const obtenerUsuarioQuery = async (req = request, res = response) => {
 const crearUser = async (req = request, res = response) => {
   const usuario = req.body
 
-  // modelo de usuario
-  /* const objUser = {
-    nombre: '',
-    apellido: '',
-    correo: '',
-    edad: 25,
-    telefono: '',
-    provincia: '',
-    ciudad: '',
-    direccion: ''
-  } */
+  // verificar si existe el usuario a tráves del correo
+  const copia = await Usuario.findOne({ where: { correo: usuario.correo } })
+
+  if (copia) {
+    return res.status(400).json({
+      msg: 'El correo ya está registrado'
+    })
+  }
 
   const data = await Usuario.create(usuario)
   res.json({
-    msg: 'post API - usuario',
+    msg: 'Usuario creado correctamente',
     data
   })
 }

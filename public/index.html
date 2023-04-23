@@ -2,66 +2,108 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link rel="shortcut icon" href="../" type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QUERIES</title>
   </head>
   <body>
     <h1>BASIC CRUD</h1>
-    <section>
-      <h2>GET(Listar clientes)</h2>
-      <form style="display: flex; flex-direction: column">
-        <span style="opacity: 0.5"
-          >*Si id es 0 o null, se listara toda la bd*</span
-        >
-        <input class="getId" type="number" min="0" placeholder="id" />
-        <input class="getSubmit" type="submit" value="get" />
-        <textarea
-          style="font-size: 8px"
-          class="getArea"
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          contenteditable="false"
-          placeholder="obtener info de base de datos"
-        ></textarea>
-        <button
-          class="deleteButton"
-          style="background-color: #f34; color: white"
-        >
-          ELIMINAR
-        </button>
-      </form>
-    </section>
-    <section style="max-width: 500px; margin: 1em auto">
-      <fieldset>
-        <legend>POST(Crear cliente)</legend>
-        <fieldset>
-          <legend>PUT ELEMENT</legend>
+    <textarea name="" id="" cols="100" rows="200">
+      # MERN + sequelize
 
-          <input type="checkbox" value="chekbox" class="postCheckbox" />
-          <input type="number" class="postNumber" placeholder="id" min="1" />
-          <button class="putGet">Obtener</button>
-        </fieldset>
-        <form class="postForm" style="display: flex; flex-direction: column">
-          <span>Nombre: </span>
-          <input type="text" />
-          <span>Apellido: </span>
-          <input type="text" />
-          <span>Edad: </span>
-          <input type="number" />
-          <span>E-mail:</span>
-          <input type="email" />
-          <span>Contraseña:</span>
-          <input type="password" />
-          <span>Confirmar contraseña:</span>
-          <input type="password" />
-          <input class="postSubmit" type="submit" value="Registrar" />
-        </form>
-      </fieldset>
-    </section>
+Proyecto que se basa en la visualización de registros de compras realizada por diferentes usuarios.
+
+- Tablas enlazadas a tráves de foreign keys.
+  para reforzar los conocimientos de Mysql y aprender a poner en práctica el ORM Sequelize.
+
+### EJECUCION
+
+`npm start` -> `node --watch server.js`
+
+### .env
+
+`PORT=` puerto de escucha de API
+`MYSQLDATABASE=` base de datos
+`MYSQLHOST=` host
+`MYSQLUSER=` usuario
+`MYSQLPASSWORD=` contraseña
+`MYSQLPORT=` puerto de base de datos
+
+### Configuración general
+
+(modificacion en controller/cliente.js)
+
+- Creación de tablas : `./helper/sequelizeBD.js`
+
+- Estructura de tabla usuarios:
+  `id | nombre  | apellido | edad | correo | telefono | provincia | ciudad | direccion | password`
+
+- Nombre estatico para consultas http: `/usuario/`
+
+## CRUD
+
+Este es un ejemplo con localhost:3000/
+
+#### GET
+
+Obtener columnas a tráves de query.
+
+`https://localhost:3000/usuario?nombre=nombre&apellido=apellido...`
+
+NOTA: si no hay query se devuelve toda la tabla.
+
+#### GET Usuario ID
+
+Obtener un dato a traves del id pasado como param
+
+`https://localhost:3000/usuario/datos/2`
+
+#### GET Usuario query
+
+Obtener una fila a traves de query
+
+`https://localhost:3000/usuario/datos?nombre=Pepe`
+
+#### POST
+
+Crear un nuevo cliente en la tabla usuarios
+
+`https://localhost:3000/usuario`
+
+- requisitos:
+  body: JSON.stringify({
+  "nombre": "Pepe",
+  "apellido": "Perez",
+  "correo": "test1@gmail.com",
+  "edad": 25,
+  "telefono": "0999999999",
+  "provincia": "Pichincha",
+  "ciudad": "Quito",
+  "direccion": "Av. 6 de Diciembre",
+  "password":"1111"
+  })
+
+#### PUT
+
+Actualizar un cliente a traves del :id
+
+`https://localhost:3000/usuario/1`
+
+- requisitos:
+  body: JSON.stringify
+  ({
+  nombre: value,
+  })
+
+#### DELETE
+
+Eliminar un cliente a traves del :id
+
+`https://localhost:3000/usuario/1`
+
+    </textarea>
   </body>
+
   <script src="js/index.js" type="module"></script>
 </html>

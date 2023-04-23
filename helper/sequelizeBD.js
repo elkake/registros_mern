@@ -7,7 +7,13 @@ export const sequelize = new Sequelize(
   objDB.DB_PASSWORD,
   {
     host: objDB.DB_HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    pool: {
+      max: 15,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
   }
 )
 
@@ -54,6 +60,10 @@ export const Usuario = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false
     },
+    postal: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false
@@ -73,7 +83,7 @@ export const Pedido = sequelize.define('pedido', {
     primaryKey: true
   },
   estado: {
-    type: DataTypes.ENUM('procesando', 'envolviendo', 'completado'),
+    type: DataTypes.ENUM('procesando', 'envolviendo', 'enviado', 'completado'),
     allowNull: false,
     defaultValue: 'procesando'
   }
@@ -101,6 +111,17 @@ export const Producto = sequelize.define('producto', {
   stock: {
     type: DataTypes.INTEGER,
     allowNull: false
+  }
+})
+
+export const Imagenes = sequelize.define('imagenes', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  img: {
+    type: DataTypes.STRING
   }
 })
 
@@ -143,6 +164,7 @@ PedidosProductos.belongsTo(Producto, {
   foreignKey: 'id_producto'
 })
 Historial.belongsTo(PedidosProductos, { foreignKey: 'id_pedpro' })
+Imagenes.belongsTo(Producto, { foreignKey: 'id_producto' })
 
 // *synchronized
 sequelize.sync()
